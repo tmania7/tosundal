@@ -6,4 +6,4 @@
 <!-- <img src="sundal.jpg" alt ="선달님" width="100%"> -->
 
 <img src="sundal.jpg" alt ="선달님"
-style = "width:320px; height:214px; border:3px solid black>
+style = "width:320px; height:214px; border:3px solid black">
