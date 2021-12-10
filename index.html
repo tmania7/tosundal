@@ -3,43 +3,66 @@
 <head>
   <title>Alcohol - Welcome</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="colors.js"></script>
 </head>
 <body>
-  <h1><a href="index.html">Alcohol</a></h1>
+  <h1><a href="index.html" onclick="fetchPage('welcome')">Alcohol</a></h1>
   <input id="night_day" type="button" value="night" onclick="
     nightDayHandler(this);
   ">
-  <ol>
-    <li><a onclick="
-      fetch('html').then(function(response){
-        response.text().then(function(text){
-          document.querySelector('article').innerHTML = text;
-        })
-      });
-    ">소주</a></li>
-    <li><a onclick="
-      fetch('css').then(function(response){
-        response.text().then(function(text){
-          document.querySelector('article').innerHTML = text;
-        })
-      });
-    ">맥주</a></li>
-    <li><a onclick="
-      fetch('javascript').then(function(response){
-        response.text().then(function(text){
-          document.querySelector('article').innerHTML = text;
-        })
-      });
-    ">선달양반</a></li>
-  </ol>
-  <article></article>
 
-  <h2>Alcohol</h2>
-  <p> In chemistry,<a href="https://en.wikipedia.org/wiki/Alcohol" title="Alcohol specification">alcohol</a> is an organic compound that carries at least one hydroxyl functional group (−OH) bound to a saturated carbon atom.[2] The term alcohol originally referred to the primary alcohol ethanol (ethyl alcohol), which is used as a drug and is the main alcohol present in alcoholic drinks. </p>
-  <img src="Alcohol.png" width="50%">
+  <ol id="nav">
+
+  </ol>
+  <article>
+
+
+  </article>
+
+  <script>
+  function fetchPage(name){
+    fetch(name).then(function(response){
+      response.text().then(function(text){
+        document.querySelector('article').innerHTML = text;
+      })
+    });
+  }
+
+  if(location.hash){
+    fetchPage(location.hash.substr(2));
+  } else{
+    //fetchPage('welcome');
+    fetchPage('welcome');
+  }
+
+  fetch('list').then(function(response){
+    response.text().then(function(text){
+      //console.log(text);
+
+      var items = text.split(',')
+      console.log(items);
+      var i = 0;
+      var tags = '';
+      while(i < items.length){
+        var item = items[i];
+        item = item.trim();   // how to clean whitespace in staring. 마지막 배열값에 공백 제거
+        // <li><a href="#!html" onclick="fetchPage('html')">HTML</a></li>
+        //console.log(item);
+        //var tag = '<li>'+item+'</li>';
+        var tag = '<li><a href = "#!'+item+'" onclick="fetchPage(\''+item+'\')">'+item+'</a></li>';
+        //console.log(tag);
+        tags = tags + tag;
+        i = i + 1;
+
+      }
+      // console.log(items);
+      document.querySelector('#nav').innerHTML = tags;
+    })
+  });
+
+  </script>
 
 </body>
 </html>
